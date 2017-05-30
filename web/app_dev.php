@@ -18,6 +18,7 @@ use Symfony\Component\Debug\Debug;
 //    exit('You are not allowed to access this file. Check '.basename(__FILE__).' for more information.');
 //}
 
+$request_body = file_get_contents('php://input');
 
 /** @var \Composer\Autoload\ClassLoader $loader */
 $loader = require __DIR__.'/../app/autoload.php';

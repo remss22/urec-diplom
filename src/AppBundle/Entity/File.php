@@ -22,9 +22,9 @@ class File
     private $id;
 
     /**
-     * @var binary
+     * @var string
      *
-     * @ORM\Column(name="data", type="binary")
+     * @ORM\Column(name="data", type="text")
      */
     private $data;
 
@@ -84,7 +84,7 @@ class File
     /**
      * Set data
      *
-     * @param binary $data
+     * @param string $data
      *
      * @return File
      */
