@@ -24,13 +24,12 @@ class DefaultController extends Controller
         $formatsAndIds = [];
         foreach ($files as $file) {
             $data[] = [
-                'id' => $file->getId(),
                 'name' => $file->getName(),
                 'format' => $file->getFormat(),
                 'size' =>$file->getSize(),
             ];
             $formatsAndIds[] = [
-                'id' => $file->getId(),
+                'name' => $file->getName(),
                 'format' => $file->getFormat()
             ];
         }
@@ -79,7 +78,6 @@ class DefaultController extends Controller
         }
         /** @var mixed $tempData */
         $tempData = $data;
-        $a = get_object_vars($tempData);
         foreach ($keys as $key) {
             if (is_array($tempData) && array_key_exists($key, $tempData)) {
                 $tempData = $tempData[$key];

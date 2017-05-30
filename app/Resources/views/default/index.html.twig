@@ -1,5 +1,17 @@
 {% include 'header.html.twig' %}
-<div>
-    123
-</div>
+
+{% for format in formats %}
+    <div class="container">
+        <div>{{ format }}</div>
+        {% for formatsAndId in formatsAndIds %}
+            {% if formatsAndId.format  == format %}
+                {% for item in data %}
+                    {% if item.name == formatsAndId.name %}
+                        <div>{{ item.name}}</div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endfor %}
 {% include 'footer.html.twig' %}
