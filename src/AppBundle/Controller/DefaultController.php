@@ -26,14 +26,15 @@ class DefaultController extends Controller
             $data[] = [
                 'name' => $file->getName(),
                 'format' => $file->getFormat(),
-                'size' =>$file->getSize(),
+                'size' => $file->getSize(),
+                'creationDate' =>$file->getCreationDate()->format('Y-m-d H:i:s'),
             ];
             $formatsAndIds[] = [
                 'name' => $file->getName(),
                 'format' => $file->getFormat()
             ];
         }
-        return $this->render('default/index.html.twig', ['data' => $data , 'formats' => $formats, 'formatsAndIds' => $formatsAndIds]);
+        return $this->render('default/index.html.twig', ['data' => $data , 'formats' => array_unique($formats), 'formatsAndIds' => $formatsAndIds]);
     }
 
     /**

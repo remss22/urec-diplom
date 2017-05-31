@@ -2,13 +2,15 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>{% block title %}Logger{% endblock %}</title>
+    <title>{% block title %}Cloud Disc{% endblock %}</title>
     {% block stylesheets %}{% endblock %}
     <script src="{{ asset('jq/jquery.js') }}"></script>
     <script src="{{ asset('jq/notify.min.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css')}}" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap-theme.min.css') }}" crossorigin="anonymous">
     <script src="{{ asset('bootstrap/js/bootstrap.min.js')}}" crossorigin="anonymous"></script>
+    {#<script src="{{ asset('sorter/tablesorter/jquery-latest.js')}}" crossorigin="anonymous"></script>#}
+    <script src="{{ asset('sorter/tablesorter/jquery.tablesorter.js')}}" crossorigin="anonymous"></script>
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 </head>
 <body>

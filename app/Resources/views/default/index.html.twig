@@ -2,16 +2,62 @@
 
 {% for format in formats %}
     <div class="container">
-        <div>{{ format }}</div>
-        {% for formatsAndId in formatsAndIds %}
-            {% if formatsAndId.format  == format %}
-                {% for item in data %}
-                    {% if item.name == formatsAndId.name %}
-                        <div>{{ item.name}}</div>
-                    {% endif %}
-                {% endfor %}
-            {% endif %}
-        {% endfor %}
+        <div class="js-slider-data">
+            <button type="button" class="js-btn-load btn btn-info" data-format="{{ format }}">{{ format }}</button>
+            <table class="table table-striped js-table-format-{{ format }}">
+                <thead class="h3">
+                <tr>
+                    <th>
+                        <button type="button" class="btn btn-default btn-sm js-sort-bnt-{{ format }}">
+                            <span class="glyphicon glyphicon-resize-vertical" aria-hidden="true"></span> Size
+                        </button>
+                    </th>
+                    <th>name</th>
+                    <th>creation date</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody class="js-result">
+                    {% for formatsAndId in formatsAndIds %}
+                        {% if formatsAndId.format  == format %}
+                            {% for item in data %}
+                                {% if item.name == formatsAndId.name %}
+                                    <tr>
+                                        <td class="js-format-size-{{ format }}">{{ item.size }}</td>
+                                        <td>{{ item.name }}</td>
+                                        <td>{{ item.creationDate }}</td>
+
+                                        <td>
+                                            <button type="button" class="js-btn-delete btn btn-danger">Delete</button>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endfor %}
+
+<script>
+    function addEvents() {
+        var $tables  = $('.js-btn-load');
+        $tables.each(function () {
+            var format = $(this).data('format');
+            $(this).click(function () {
+                $( '.js-table-format-' + format ).slideToggle("fast");
+            });
+            var $table = $('.js-table-format-' + format);
+            $table.slideUp();
+            $table.tablesorter();
+        });
+    }
+    $(document).ready(function() {
+            addEvents();
+        }
+    );
+
+</script>
 {% include 'footer.html.twig' %}
