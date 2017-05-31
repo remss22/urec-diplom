@@ -26,9 +26,13 @@
                                         <td class="js-format-size-{{ format }}">{{ item.size }}</td>
                                         <td>{{ item.name }}</td>
                                         <td>{{ item.creationDate }}</td>
-
                                         <td>
-                                            <button type="button" class="js-btn-delete btn btn-danger">Delete</button>
+                                            <span>
+                                                <a href="/delete/{{ item.id }}"><button type="button" class="js-btn-delete btn btn-danger">Delete</button></a>
+                                            </span>
+                                            <span>
+                                                <a href="/download/{{ item.id }}"> <button type="button" class="js-btn-delete btn btn-success"> Download</button></a>
+                                            </span>
                                         </td>
                                     </tr>
                                 {% endif %}
@@ -58,6 +62,5 @@
             addEvents();
         }
     );
-
 </script>
 {% include 'footer.html.twig' %}

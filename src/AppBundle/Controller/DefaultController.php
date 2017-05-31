@@ -28,6 +28,7 @@ class DefaultController extends Controller
                 'format' => $file->getFormat(),
                 'size' => $file->getSize(),
                 'creationDate' =>$file->getCreationDate()->format('Y-m-d H:i:s'),
+                'id' => $file->getId()
             ];
             $formatsAndIds[] = [
                 'name' => $file->getName(),
@@ -51,6 +52,12 @@ class DefaultController extends Controller
     public function uploadFileAction(Request $request) {
         $uploadFile = '/var/www/upl/' . basename($_FILES[0]['name']);
         preg_match('#\.\w+$#', $_FILES[0]['name'], $format);
+        $fileRepository = $this->getDoctrine()->getManager()->getRepository('AppBundle:File');
+        /**@var File $file **/
+        $file = $fileRepository->findOneBy(['name' => basename($_FILES[0]['name'])]);
+        if ($file !== null) {
+            return new JsonResponse(['status' => 'error']);
+        }
         move_uploaded_file($_FILES[0]['tmp_name'], $uploadFile);
         $File = new File();
         $File->setCreationDate(new \DateTime())
@@ -64,6 +71,37 @@ class DefaultController extends Controller
         $em->persist($File);
         $em->flush();
         return new JsonResponse(['status' => 'ok']);
+    }
+
+    /**
+     * @Route("/download/{id}", name="download", requirements={"id": "\d+"})
+     */
+    public function downloadAction(Request $request, $id) {
+
+        $fileRepository = $this->getDoctrine()->getManager()->getRepository('AppBundle:File');
+        /**@var File $file **/
+        $file = $fileRepository->find($id);
+        $fileData  = $file->getData();
+        $fileName  = $file->getName();
+
+        header('Content-Type: application/x-download');
+        header('Content-Length: ' . strlen($fileData));
+        header('Cache-Control: no-cache, no-store, max-age=0, must-revalidate');
+        header('Pragma: no-cache');
+        header('Content-Disposition: attachment; filename=' . $fileName);
+        header('Connection: close');
+        echo $fileData;
+    }
+
+    /**
+     * @Route("/delete/{id}", name="delete", requirements={"id": "\d+"})
+     */
+    public function deleteAction(Request $request, $id) {
+        $em = $this->getDoctrine()->getManager();
+        $file = $em->getRepository('AppBundle:File')->find($id);
+        $em->remove($file);
+        $em->flush();
+        return $this->redirectToRoute('homepage');
     }
 
 

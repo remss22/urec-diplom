@@ -98,7 +98,7 @@ class File
     /**
      * Get data
      *
-     * @return binary
+     * @return string
      */
     public function getData()
     {
